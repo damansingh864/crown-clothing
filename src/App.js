@@ -42,7 +42,7 @@ class App extends React.Component {
         
       }
       // addCollectionAndDocuments('collections', collectionArray.map(({title, items}) => ({ title, items })))
-    })
+    }, error => console.log(error))
   }
  
   componentWillUnmount() {

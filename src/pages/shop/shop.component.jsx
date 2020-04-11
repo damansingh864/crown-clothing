@@ -17,7 +17,7 @@ const CollectionPageWithSpinner = WithSpinner(CollectionPage)
 class ShopPage extends React.Component {  
   state = {
     loading: true
-  }
+   }
   
   unSubscribeFromSnapshot = null;
 
@@ -25,12 +25,24 @@ class ShopPage extends React.Component {
     const { updateCollections } = this.props
     const collectionRef = firestore.collection('collections')
 
-    this.unSubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot =>{
+    // fetch('https://firestore.googleapis.com/v1/projects/crown-db-d7d50/databases/(default)/documents/collections')
+    // .then(response => response.json())
+    // .then(collections => console.log(collections))
+
+    collectionRef.get().then(snapshot => {
       const collectionMap = convertCollectionsSnapshotToMap(snapshot)
       console.log(collectionMap)
       updateCollections(collectionMap)
       this.setState({ loading: false })
     })
+    
+
+    // this.unSubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot =>{
+    //   const collectionMap = convertCollectionsSnapshotToMap(snapshot)
+    //   console.log(collectionMap)
+    //   updateCollections(collectionMap)
+    //   this.setState({ loading: false })
+    // })
   }
 
   render () {
