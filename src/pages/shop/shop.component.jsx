@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -10,18 +10,18 @@ import CollectionPageContainer from '../collection/collection.container'
 
 import { fetchCollectionStart } from '../../redux/shop/shop.actions'
 
-class ShopPage extends React.Component {
+const ShopPage = ({ fetchCollectionsStart, match }) => {
   // state = {
   //   loading: true
   //  }
   
   // unSubscribeFromSnapshot = null;
 
-  componentDidMount() {
-    const { fetchCollectionsStart } = this.props
-
+  useEffect(() => {
     fetchCollectionsStart()
-  }
+  }, [fetchCollectionsStart])
+
+    
   // componentDidMount() {
   //   const { updateCollections } = this.props
   //   const collectionRef = firestore.collection('collections')
@@ -45,23 +45,20 @@ class ShopPage extends React.Component {
     //   this.setState({ loading: false })
     // })
   // }
-
-  render () {
-    const { match } = this.props
-    return (
-      <div className='show-page'>
-        <Route
-          exact
-          path={`${match.path}`}
-          component={CollectionOverviewContainer}
-        />
-        <Route
-          path={`${match.path}/:collectionId`}
-          component={CollectionPageContainer}
-        />
-      </div>
-    )
-  }
+  
+  return (
+    <div className='show-page'>
+      <Route
+        exact
+        path={`${match.path}`}
+        component={CollectionOverviewContainer}
+      />
+      <Route
+        path={`${match.path}/:collectionId`}
+        component={CollectionPageContainer}
+      />
+    </div>
+  )
 }
 
 // const mapDispatchToProps = dispatch => ({
